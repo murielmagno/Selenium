@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BuscaHondaCity {
     @Test
-    public void login() {
+    public void buscandoHondaCity() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("test-type");
