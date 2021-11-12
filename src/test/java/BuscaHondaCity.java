@@ -27,7 +27,7 @@ public class BuscaHondaCity {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.findElement(By.className("SearchBar__input")).sendKeys("honda city");
             driver.findElement(By.cssSelector("a[class='Button Button--red-home']")).click();
-            driver.findElement(By.className("locationAutoComplete")).sendKeys("São Luís");
+            driver.findElement(By.cssSelector("a[class='locationAutoComplete']")).sendKeys("São Luís");
             driver.findElement(By.name("São Luís - MA")).click();
             String valorAtual = driver.findElement(By.cssSelector("a[class='sc-ipZHIp lcWUdB']")).getText();
             driver.findElement(By.name("1.5 LX 16V FLEX 4P AUTOMÁTICO")).click();
