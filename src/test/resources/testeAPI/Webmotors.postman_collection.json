@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "7ca1c4d9-1b5d-4041-a628-8dabe96bbdca",
+		"name": "Webmotors",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Buscar marca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Tempo de resposta aceitavel\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"})\r",
+							"\r",
+							"pm.test('Adicionando ID da marca Honda', () => {\r",
+							"    pm.expect(responseJson.some(a =>{\r",
+							"        a.Name === 'Honda' &&\r",
+							"        pm.environment.set(\"idMake\",a.ID) &\r",
+							"        pm.environment.set(\"nomeMarca\",a.Name);  }))\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{linkAmbiente}}make",
+					"host": [
+						"{{linkAmbiente}}make"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar modelo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Tempo de resposta aceitavel\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"})\r",
+							"\r",
+							"pm.test('Adicionando ID do Modelo City', () => {\r",
+							"    pm.expect(responseJson.some(a =>{\r",
+							"        a.Name === 'City' &&\r",
+							"        pm.environment.set(\"idModelo\",a.ID) &\r",
+							"        pm.environment.set(\"nomeModelo\",a.Name);        \r",
+							"        }))\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{linkAmbiente}}model?MakeID={{idMake}}",
+					"host": [
+						"{{linkAmbiente}}model"
+					],
+					"query": [
+						{
+							"key": "MakeID",
+							"value": "{{idMake}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar versão",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Tempo de resposta aceitavel\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"})\r",
+							"\r",
+							"pm.test('Adicionando ID do MOdelo City', () => {\r",
+							"    pm.expect(responseJson.some(a =>{\r",
+							"        a.Name === '1.5 LX 16V FLEX 4P MANUAL' &&\r",
+							"        pm.environment.set(\"versao\",a.ID);}))\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{linkAmbiente}}version?ModelID={{idModelo}}",
+					"host": [
+						"{{linkAmbiente}}version"
+					],
+					"query": [
+						{
+							"key": "ModelID",
+							"value": "{{idModelo}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de veiculos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Tempo de resposta aceitavel\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"})\r",
+							"\r",
+							"pm.test('Verificando Marca', () => {\r",
+							"    pm.expect(responseJson.some(a =>\r",
+							"        a.Make === pm.environment.get(\"nomeMarca\")\r",
+							"    ),'Marca não encontrada').to.be.true\r",
+							"})\r",
+							"\r",
+							"pm.test('Verificando Modelo', () => {\r",
+							"    pm.expect(responseJson.some(a =>\r",
+							"        a.Model === pm.environment.get(\"nomeModelo\")\r",
+							"    ),'Modelo não encontrado').to.be.true\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{linkAmbiente}}vehicles?page=1",
+					"host": [
+						"{{linkAmbiente}}vehicles"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
